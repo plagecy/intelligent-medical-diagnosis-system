@@ -1,0 +1,33 @@
+{% extends 'diagnosis/base.html' %}
+
+{% block content %}
+<h2 class="title">Medical Diagnosis Assistant</h2>
+
+<form method="post" class="symptom-form">
+    {% csrf_token %}
+
+    <div class="symptom-grid">
+        {% for field in form %}
+            <label class="symptom-item">
+                {{ field }} {{ field.label }}
+            </label>
+        {% endfor %}
+    </div>
+
+    <button type="submit" class="predict-btn">Predict</button>
+</form>
+
+{% if result %}
+<div class="result-box">
+    <h3>Predicted Disease</h3>
+    <p>{{ result }}</p>
+</div>
+
+<div style="text-align:right; margin-bottom:10px;">
+    Logged in as {{ request.user.username }} |
+    <a href="{% url 'logout' %}">Logout</a>
+</div>
+
+{% endif %}
+
+{% endblock %}
